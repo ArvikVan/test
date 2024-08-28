@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.collection.mutableLongLongMapOf
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +13,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.material.icons.rounded.Call
+import androidx.compose.material.icons.rounded.Create
+import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,12 +27,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.test.ui.theme.TestTheme
@@ -39,9 +45,10 @@ class MainActivity : ComponentActivity() {
             TestTheme {
                 Surface (
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color(126364)
                 ) {
-                    ComposeQuadrantApp()
+                    BusinessCard()
+//                    ComposeQuadrantApp()
 //                    TaskCompletedScreen()
 //                    Greeting(firstText = stringResource(R.string.first_text_message),
 //                        secondText = stringResource(R.string.second_text_message),
@@ -51,6 +58,34 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+@Composable
+fun BusinessCard() {
+    val image = painterResource(R.drawable.android_logo)
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row (
+            modifier = Modifier.size(width = 100.dp, height = 100.dp)
+        ){
+            Image(
+                painter = image,
+                contentDescription = null,
+                contentScale = ContentScale.Inside,
+                alignment = Alignment.CenterStart,
+                alpha = 0.9F,
+            )
+        }
+        ComposableFirstCard(
+            fullName = stringResource(id = R.string.full_name),
+            title = stringResource(id = R.string.title),
+            modifier = Modifier.padding(8.dp));
+    }
+    Row (verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.Center) {
+        ComposableSecondCard()
+    }
+
 }
 
 @Composable
@@ -167,5 +202,60 @@ private fun ComposableInfoCard(
             text = description,
             textAlign = TextAlign.Justify
         )
+    }
+}
+@Composable
+private fun ComposableFirstCard(
+    fullName: String,
+    title: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = fullName,
+            modifier = Modifier.padding(bottom = 16.dp),
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp
+        )
+        Text(
+            text = title,
+            textAlign = TextAlign.Left,
+            fontSize = 12.sp
+        )
+    }
+}
+@Composable
+private fun ComposableSecondCard() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row {
+            Icon(Icons.Rounded.Call, contentDescription = "Localized description")
+            Text(
+                text = stringResource(id = R.string.title),
+                textAlign = TextAlign.Left,
+                fontSize = 12.sp
+            )
+        }
+        Row {
+            Icon(Icons.Rounded.AccountCircle, contentDescription = "Localized description")
+            Text(
+                text = stringResource(id = R.string.title),
+                textAlign = TextAlign.Left,
+                fontSize = 12.sp
+            )
+        }
+        Row {
+            Icon(Icons.Rounded.Create, contentDescription = "Localized description")
+            Text(
+                text = stringResource(id = R.string.title),
+                textAlign = TextAlign.Left,
+                fontSize = 12.sp
+            )
+        }
     }
 }
