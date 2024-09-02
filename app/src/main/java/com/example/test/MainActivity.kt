@@ -23,10 +23,15 @@ import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material.icons.rounded.Create
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -79,27 +84,48 @@ fun LemonPreview() {
         LemonadeApp()
     }
 }
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LemonadeApp() {
     var currentStep by remember { mutableIntStateOf(1) }
-    when(currentStep) {
-        1 -> LemonImageTree(
-            textLabel = stringResource(id = R.string.lemon_tree),
-            imageResource = R.drawable.lemon_tree,
-            onImageClick = { currentStep = 2 })
-        2 -> LemonImageTree(
-            textLabel = stringResource(id = R.string.lemon),
-            imageResource = R.drawable.lemon_squeeze,
-            onImageClick = { currentStep = 3 })
-        3 -> LemonImageTree(
-            textLabel = stringResource(id = R.string.glass_of_lemonade),
-            imageResource = R.drawable.lemon_drink,
-            onImageClick = { currentStep = 4 })
-        4 -> LemonImageTree(
-            textLabel = stringResource(id = R.string.empty_glass),
-            imageResource = R.drawable.lemon_restart,
-            onImageClick = { currentStep = 1 })
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(title = {
+                Text(text = "Lemonade", fontWeight = FontWeight.Bold)
+            },
+                colors = TopAppBarDefaults.largeTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            )
+        }
+    ){
+        innerPadding ->
+        Surface (modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding)
+            .background(MaterialTheme.colorScheme.tertiaryContainer),
+            color = MaterialTheme.colorScheme.background){
+            when(currentStep) {
+                1 -> LemonImageTree(
+                    textLabel = stringResource(id = R.string.lemon_tree),
+                    imageResource = R.drawable.lemon_tree,
+                    onImageClick = { currentStep = 2 })
+                2 -> LemonImageTree(
+                    textLabel = stringResource(id = R.string.lemon),
+                    imageResource = R.drawable.lemon_squeeze,
+                    onImageClick = { currentStep = 3 })
+                3 -> LemonImageTree(
+                    textLabel = stringResource(id = R.string.glass_of_lemonade),
+                    imageResource = R.drawable.lemon_drink,
+                    onImageClick = { currentStep = 4 })
+                4 -> LemonImageTree(
+                    textLabel = stringResource(id = R.string.empty_glass),
+                    imageResource = R.drawable.lemon_restart,
+                    onImageClick = { currentStep = 1 })
+            }
+        }
     }
+
 }
 @Composable
 fun LemonImageTree(textLabel : String,
