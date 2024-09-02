@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.colorspace.WhitePoint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -53,8 +54,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TestTheme {
-                DiceRollerApp()
-/*                Surface (
+                LemonadeApp()
+/*                 DiceRollerApp()
+               Surface (
                     modifier = Modifier.fillMaxSize(),
                     color = Color(126364)
                 ) {
@@ -70,6 +72,61 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+@Preview
+@Composable
+fun LemonPreview() {
+    TestTheme() {
+        LemonadeApp()
+    }
+}
+@Composable
+fun LemonadeApp() {
+    var currentStep by remember { mutableIntStateOf(1) }
+    when(currentStep) {
+        1 -> LemonImageTree(
+            textLabel = stringResource(id = R.string.lemon_tree),
+            imageResource = R.drawable.lemon_tree,
+            onImageClick = { currentStep = 2 })
+        2 -> LemonImageTree(
+            textLabel = stringResource(id = R.string.lemon),
+            imageResource = R.drawable.lemon_squeeze,
+            onImageClick = { currentStep = 3 })
+        3 -> LemonImageTree(
+            textLabel = stringResource(id = R.string.glass_of_lemonade),
+            imageResource = R.drawable.lemon_drink,
+            onImageClick = { currentStep = 4 })
+        4 -> LemonImageTree(
+            textLabel = stringResource(id = R.string.empty_glass),
+            imageResource = R.drawable.lemon_restart,
+            onImageClick = { currentStep = 1 })
+    }
+}
+@Composable
+fun LemonImageTree(textLabel : String,
+                   imageResource : Int,
+                   onImageClick: () -> Unit,
+                   modifier: Modifier = Modifier
+                   ) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Button(onClick = onImageClick) {
+            Image(
+                painter = painterResource(imageResource),
+                contentDescription = "1"
+            )
+        }
+        Text(
+            text = textLabel,
+            modifier = Modifier.padding(8.dp)
+        )
+    }
+
+}
+
+/*
 
 @Preview
 @Composable
@@ -305,4 +362,4 @@ private fun ComposableSecondCard() {
             )
         }
     }
-}
+}*/
