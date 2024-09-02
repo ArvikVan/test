@@ -14,6 +14,10 @@ fun main() {
     printFinalTemperature(10.0, "Fahrenheit", "Kelvin") {
         fahrenheit -> 5.0/9.0  * (fahrenheit - 32) + 273.15
     }
+    println(ageColc(60))
+}
+fun ageColc(age : Int) : Boolean{
+    return age in 18..59
 }
 fun printFinalTemperature(
     initialMeasurement: Double,

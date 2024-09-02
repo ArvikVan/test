@@ -15,5 +15,6 @@
     <string name="fourth_description">A layout composable that places its children in a vertical sequence.</string>
     <string name="full_name">Khubetsov Arviy Yrievich</string>
     <string name="title">java developer</string>
+    <string name="roll">Roll</string>
 
 </resources>
